@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Hello gh-workflow-log-cleaner!"
-
 # Snippets to help get started:
 
 # Determine if an executable is in the PATH
@@ -33,3 +31,17 @@ echo "Hello gh-workflow-log-cleaner!"
 #   {{- end -}}
 # '
 # exec gh api graphql -f query="${QUERY}" --paginate --template="${TEMPLATE}"
+#
+if [ -z "$1" ]; then
+  echo "Error: Specify workflow name." >&2
+  echo "Usage:  gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>]"
+  echo ""
+  echo "Available workflows:"
+  gh workflow list --json name --jq '.[].name | "- \(.)"' | cat -
+  exit 1
+fi
+
+for id in $(gh run list --workflow "$1" --json databaseId --jq '.[].databaseId' --limit 100); do
+  echo "Deleting run $id"
+  gh run delete $id
+done
