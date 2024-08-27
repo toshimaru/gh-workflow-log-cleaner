@@ -1,5 +1,7 @@
 # GitHub Workflow Log Cleaner
 
+![OG Image](./img/og.png)
+
 ## Usage
 
 ```console
