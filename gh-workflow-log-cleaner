@@ -1,17 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-# Snippets to help get started:
-
-# Determine if an executable is in the PATH
-# if ! type -p ruby >/dev/null; then
-#   echo "Ruby not found on the system" >&2
-#   exit 1
-# fi
-
-# Pass arguments through to another command
-# gh issue list "$@" -R cli/cli
-
 # Using the gh api command to retrieve and format information
 # QUERY='
 #   query($endCursor: String) {
@@ -43,6 +32,6 @@ if [ -z "$1" ]; then
 fi
 
 for id in $(gh run list --workflow "$1" --json databaseId --jq '.[].databaseId' --limit 10000); do
-  echo "Deleting run $id"
+  echo "Deleting run ID: $id"
   gh run delete $id
 done
