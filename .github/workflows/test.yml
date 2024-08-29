@@ -1,0 +1,15 @@
+name: test
+on:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for the setup job to complete
+        run: sleep 5
+      - uses: actions/checkout@v4
+      - run: |
+          gh extension install .
+          gh workflow-log-cleaner
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
