@@ -9,7 +9,7 @@ if [ -z "$1" ]; then
   echo "gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>]"
   echo ""
   echo "Available workflows:"
-  gh workflow list --json name --jq '.[].name | "- \(.)"'
+  gh workflow list --all
   exit
 fi
 

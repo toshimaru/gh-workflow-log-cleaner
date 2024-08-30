@@ -14,8 +14,8 @@ assert_output_contains() {
 gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>]
 
 Available workflows:
-- setup
-- test"
+setup	active	114854128
+test	active	114855097"
   [ "$output" = "$expected_output" ]
 }
 
