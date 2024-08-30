@@ -1,5 +1,3 @@
-#!/usr/bin/env bats
-
 # Custom assertion function to check if output contains a substring
 assert_output_contains() {
   local substring="$1"
@@ -25,4 +23,5 @@ Available workflows:
   run ./gh-workflow-log-cleaner setup
   [ "$status" -eq 0 ]
   assert_output_contains "Deleting run ID:"
+  assert_output_contains "✓ Request to delete workflow submitted."
 }
