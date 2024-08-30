@@ -1,34 +1,16 @@
 #!/usr/bin/env bash
 set -e
 
-# Using the gh api command to retrieve and format information
-# QUERY='
-#   query($endCursor: String) {
-#     viewer {
-#       repositories(first: 100, after: $endCursor) {
-#         nodes {
-#           nameWithOwner
-#           stargazerCount
-#         }
-#       }
-#     }
-#   }
-# '
-# TEMPLATE='
-#   {{- range $repo := .data.viewer.repositories.nodes -}}
-#     {{- printf "name: %s - stargazers: %v\n" $repo.nameWithOwner $repo.stargazerCount -}}
-#   {{- end -}}
-# '
-# exec gh api graphql -f query="${QUERY}" --paginate --template="${TEMPLATE}"
-#
+# Disable pager
+export GH_PAGER=
+
 if [ -z "$1" ]; then
-  echo "Error: Specify workflow name." >&2
-  echo ""
-  echo "Usage: gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>]"
+  echo "Usage:"
+  echo "gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>]"
   echo ""
   echo "Available workflows:"
-  gh workflow list --json name --jq '.[].name | "- \(.)"' | cat -
-  exit 1
+  gh workflow list --json name --jq '.[].name | "- \(.)"'
+  exit
 fi
 
 for id in $(gh run list --workflow "$1" --json databaseId --jq '.[].databaseId' --limit 10000); do

@@ -1,0 +1,12 @@
+name: setup
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Create a workflow Log for the tests"
+          echo "This workflow log will be removed by the tests"
