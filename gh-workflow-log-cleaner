@@ -5,13 +5,12 @@ set -e
 export GH_PAGER=
 
 if [ -z "$1" ]; then
-  echo "Error: Specify workflow name." >&2
-  echo ""
-  echo "Usage: gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>]"
+  echo "Usage:"
+  echo "gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>]"
   echo ""
   echo "Available workflows:"
-  gh workflow list --json name --jq '.[].name | "- \(.)"' | cat -
-  exit 1
+  gh workflow list --json name --jq '.[].name | "- \(.)"'
+  exit
 fi
 
 for id in $(gh run list --workflow "$1" --json databaseId --jq '.[].databaseId' --limit 10000); do
