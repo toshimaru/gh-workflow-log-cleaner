@@ -4,16 +4,47 @@ set -e
 # Disable pager
 export GH_PAGER=
 
-if [ -z "$1" ]; then
+LIMIT="1000"
+WORKFLOW=""
+
+help() {
   echo "Usage:"
-  echo "gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>]"
+  echo "gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>] [options]"
+  echo ""
+  echo "Options:"
+  echo "  -h, --help  Show this help message and exit"
+  echo "  --limit     Limit the number of runs to delete (default: 1000)"
   echo ""
   echo "Available workflows:"
   gh workflow list --all
   exit
+}
+
+if [ -z "$1" ]; then
+  help
 fi
 
-for id in $(gh run list --workflow "$1" --json databaseId --jq '.[].databaseId' --limit 10000); do
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --limit)
+      LIMIT="$2"
+      shift
+      ;;
+    -h|--help)
+      help
+      ;;
+    -*)
+      echo "Unknown option: $1"
+      help
+      ;;
+    *)
+      WORKFLOW="$1"
+      ;;
+  esac
+  shift
+done
+
+for id in $(gh run list --workflow "$WORKFLOW" --json databaseId --jq '.[].databaseId' --limit $LIMIT); do
   echo "Deleting run ID: $id"
   gh run delete $id
 done
