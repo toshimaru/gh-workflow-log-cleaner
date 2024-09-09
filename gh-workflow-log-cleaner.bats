@@ -46,14 +46,27 @@ test	active	114855097"
   assert_output_contains "✓ Request to delete workflow submitted."
 }
 
-@test "with a invalid option" {
+@test "with limit option and a workflow-name" {
+  run ./gh-workflow-log-cleaner --limit 1 setup
+  [ "$status" -eq 0 ]
+  assert_output_contains "Deleting run ID:"
+  assert_output_contains "✓ Request to delete workflow submitted."
+}
+
+@test "with an invalid option" {
   run ./gh-workflow-log-cleaner setup --invalid
   [ "$status" -eq 1 ]
   assert_output_contains "Unknown option: --invalid"
 }
 
-@test "without workflow" {
+@test "without a workflow" {
   run ./gh-workflow-log-cleaner --limit 1
   [ "$status" -eq 1 ]
   assert_output_contains "Error: Specify a workflow to delete the log"
+}
+
+@test "with an invalid workflow-name" {
+  run ./gh-workflow-log-cleaner invalid
+  [ "$status" -eq 0 ]
+  assert_output_contains "could not find any workflows named invalid"
 }
