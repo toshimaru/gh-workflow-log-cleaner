@@ -17,11 +17,11 @@ help() {
   echo ""
   echo "Available workflows:"
   gh workflow list --all
-  exit
 }
 
 if [ -z "$1" ]; then
   help
+  exit
 fi
 
 while [ $# -gt 0 ]; do
@@ -32,10 +32,12 @@ while [ $# -gt 0 ]; do
       ;;
     -h|--help)
       help
+      exit
       ;;
     -*)
       echo "Unknown option: $1"
       help
+      exit 1
       ;;
     *)
       WORKFLOW="$1"
@@ -47,6 +49,7 @@ done
 if [ -z "$WORKFLOW" ]; then
     echo "Error: Specify a workflow to delete the log."
     help
+    exit 1
 fi
 
 for id in $(gh run list --workflow "$WORKFLOW" --json databaseId --jq '.[].databaseId' --limit $LIMIT); do
