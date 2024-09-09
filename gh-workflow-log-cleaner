@@ -44,6 +44,11 @@ while [ $# -gt 0 ]; do
   shift
 done
 
+if [ -z "$WORKFLOW" ]; then
+    echo "Error: Specify a workflow to delete the log."
+    help
+fi
+
 for id in $(gh run list --workflow "$WORKFLOW" --json databaseId --jq '.[].databaseId' --limit $LIMIT); do
   echo "Deleting run ID: $id"
   gh run delete $id
