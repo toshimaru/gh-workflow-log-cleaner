@@ -7,15 +7,23 @@ export GH_PAGER=
 LIMIT="1000"
 WORKFLOW=""
 
+bold_echo() {
+  echo -e "\e[1m$1\e[0m"
+}
+
 help() {
-  echo "Usage:"
+  bold_echo "USAGE"
   echo "gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>] [options]"
   echo ""
-  echo "Options:"
-  echo "  -h, --help  Show this help message and exit"
-  echo "  --limit     Limit the number of runs to delete (default: 1000)"
+  bold_echo "OPTIONS"
+  echo "  -h, --help    Show this help message and exit"
+  echo "  --limit int   Limit the number of runs to delete (default: 1000)"
   echo ""
-  echo "Available workflows:"
+  bold_echo "EXAMPLES"
+  echo "  Remove logs for the test workflow"
+  echo "  $ gh workflow-log-cleaner test"
+  echo ""
+  bold_echo "AVAILABLE WORKFLOWS"
   gh workflow list --all
 }
 
@@ -47,9 +55,9 @@ while [ $# -gt 0 ]; do
 done
 
 if [ -z "$WORKFLOW" ]; then
-    echo "Error: Specify a workflow to delete the log."
-    help
-    exit 1
+  echo "Error: Specify a workflow to delete the log."
+  help
+  exit 1
 fi
 
 for id in $(gh run list --workflow "$WORKFLOW" --json databaseId --jq '.[].databaseId' --limit $LIMIT); do
