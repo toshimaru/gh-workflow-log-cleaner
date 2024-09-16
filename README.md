@@ -4,12 +4,22 @@
 
 Clean up your outdated GitHub Actions workflow logs.
 
-![OG Image](./img/og.png)
+![Cover Image](./img/cover.png)
 
 ## Usage
 
 ```console
 $ gh workflow-log-cleaner "Your Workflow Name (<workflow-id> or <workflow-name> or <filename>)"
+```
+
+## Example
+
+```console
+$ gh workflow-log-cleaner test
+```
+
+```console
+$ gh workflow-log-cleaner test --limit 10
 ```
 
 ## Don't know your workflow name?
@@ -18,10 +28,18 @@ If you don't know your workflow name or workflow id, you can find it by running 
 
 ```console
 $ gh workflow-log-cleaner
-Usage:
-gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>]
+USAGE
+gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>] [options]
 
-Available workflows:
+OPTIONS
+  -h, --help    Show this help message and exit
+  --limit int   Limit the number of runs to delete (default: 1000)
+
+EXAMPLES
+  Remove logs for the test workflow
+  $ gh workflow-log-cleaner test
+
+AVAILABLE WORKFLOWS
 NAME   STATE   ID
 setup  active  114854128
 test   active  114855097

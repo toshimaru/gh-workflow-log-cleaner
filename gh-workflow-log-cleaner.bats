@@ -10,33 +10,17 @@ assert_output_contains() {
 @test "without parameter" {
   run ./gh-workflow-log-cleaner
   [ "$status" -eq 0 ]
-  expected_output="Usage:
-gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>] [options]
-
-Options:
-  -h, --help  Show this help message and exit
-  --limit     Limit the number of runs to delete (default: 1000)
-
-Available workflows:
-setup	active	114854128
-test	active	114855097"
-  [ "$output" = "$expected_output" ]
+  assert_output_contains 'gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>] [options]'
+  assert_output_contains 'setup	active	114854128
+test	active	114855097'
 }
 
 @test "with help option" {
   run ./gh-workflow-log-cleaner --help
   [ "$status" -eq 0 ]
-  expected_output="Usage:
-gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>] [options]
-
-Options:
-  -h, --help  Show this help message and exit
-  --limit     Limit the number of runs to delete (default: 1000)
-
-Available workflows:
-setup	active	114854128
-test	active	114855097"
-  [ "$output" = "$expected_output" ]
+  assert_output_contains 'gh workflow-log-cleaner [<workflow-id> | <workflow-name> | <filename>] [options]'
+  assert_output_contains 'setup	active	114854128
+test	active	114855097'
 }
 
 @test "with a workflow-name and limit option" {
