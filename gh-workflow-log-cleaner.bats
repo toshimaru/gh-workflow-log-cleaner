@@ -27,14 +27,14 @@ test	active	114855097'
   run ./gh-workflow-log-cleaner setup --limit 1
   [ "$status" -eq 0 ]
   assert_output_contains "Deleting run ID:"
-  assert_output_contains "✓ Request to delete workflow submitted."
+  assert_output_contains "✓ Request to delete workflow run submitted."
 }
 
 @test "with limit option and a workflow-name" {
   run ./gh-workflow-log-cleaner --limit 1 setup
   [ "$status" -eq 0 ]
   assert_output_contains "Deleting run ID:"
-  assert_output_contains "✓ Request to delete workflow submitted."
+  assert_output_contains "✓ Request to delete workflow run submitted."
 }
 
 @test "with an invalid option" {
