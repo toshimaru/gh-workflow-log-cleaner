@@ -6,6 +6,12 @@ Clean up your outdated GitHub Actions workflow logs.
 
 ![Cover Image](./img/cover.png)
 
+## Install
+
+```console
+$ gh extension install toshimaru/gh-workflow-log-cleaner
+```
+
 ## Usage
 
 ```console
