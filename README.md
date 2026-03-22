@@ -12,6 +12,8 @@ A GitHub CLI extension to delete outdated GitHub Actions workflow run logs in bu
 
 ## Install
 
+To install the extension, run the following command:
+
 ```console
 $ gh extension install toshimaru/gh-workflow-log-cleaner
 ```
@@ -47,6 +49,13 @@ $ gh workflow-log-cleaner test --limit 10
 # --limit can also be placed before the workflow name
 $ gh workflow-log-cleaner --limit 10 test
 ```
+
+## How It Works
+
+This extension uses the GitHub CLI under the hood:
+
+1. Lists workflow runs matching the given workflow identifier using `gh run list`
+2. Deletes each run using `gh run delete`
 
 ## Don't know your workflow name?
 
